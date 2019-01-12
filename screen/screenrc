@@ -26,13 +26,13 @@ shelltitle "$ |bash"
 term screen-256color
 #term xterm-256color
 attrcolor b ".I"
+# enable background-color-erase setting.
 #defbce on
 shell $SHELL
 #termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 #termcap * 'G0:S0=\E(%.:E0=\E(B:TY=iso2022'
 #termcapinfo xterm* ti@:te@
 
-#defencoding utf8
 #cjkwidth on
 
 #zombie "q^M"
@@ -58,37 +58,34 @@ bind ^Q quit
 # Continuous window change
 bind ^n eval 'command -c window' 'next'
 bind ^p eval 'command -c window' 'prev'
-bind -c window n eval 'next'
-bind -c window p eval 'prev'
+bind -c window  n eval 'next'
+bind -c window  p eval 'prev'
 bind -c window ^n eval 'command -c window' 'next'
 bind -c window ^p eval 'command -c window' 'prev'
 bind -c window ^q eval 'command -c window'
 
 # Focus (like vi)
-bind h  eval 'focus left'
-bind j  eval 'focus down'
-bind k  eval 'focus up'
-bind l  eval 'focus right'
+bind  h eval 'focus left'
+bind  j eval 'focus down'
+bind  k eval 'focus up'
+bind  l eval 'focus right'
 bind ^h eval    'focus left'
-bind -k kb eval 'focus left' #Backspace
 bind ^j eval    'focus down'
 bind ^k eval    'focus up'
 bind ^l eval    'focus right'
+bind -k kb eval 'focus left' #Backspace
 
-#-- Split
 bind V split -v
 bind S split
 
 bind -c resize ^]  command
-bind -c resize j eval 'resize +1' 'command -c resize'
-bind -c resize k eval 'resize -1' 'command -c resize'
 #-- Resize window
 bind e  eval 'command -c resize' 'echo "Resize window"'
 bind ^e eval 'command -c resize' 'echo "Resize window"'
-bind -c resize h eval 'command -c resize' 'resize -h -1'
-bind -c resize l eval 'command -c resize' 'resize -h +1'
-bind -c resize j eval 'command -c resize' 'resize -v +1'
-bind -c resize k eval 'command -c resize' 'resize -v -1'
+bind -c resize  h eval 'command -c resize' 'resize -h -1'
+bind -c resize  l eval 'command -c resize' 'resize -h +1'
+bind -c resize  j eval 'command -c resize' 'resize -v +1'
+bind -c resize  k eval 'command -c resize' 'resize -v -1'
 bind -c resize ^h eval 'command -c resize' 'resize -h -1'
 bind -c resize ^l eval 'command -c resize' 'resize -h +1'
 bind -c resize ^j eval 'command -c resize' 'resize -v +1'
@@ -105,6 +102,11 @@ bind -c resize ^k eval 'command -c resize' 'resize -v -1'
 #bindkey -k k9 select 9
 #bindkey -k k; select 10
 
+# window re-numbering
+# override default `N'(number) mapping
+bind N colon 'number '
+
+#-- Split
 # trigger for layout sub-commands
 bind ^Y eval 'command -c layout' 'layout show'
 bind y  eval 'command -c layout' 'layout show'
