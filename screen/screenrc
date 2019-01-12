@@ -23,12 +23,12 @@ crlf off
 
 ## current command name as window name
 shelltitle "$ |bash"
-#term screen-256color
+term screen-256color
 #term xterm-256color
 attrcolor b ".I"
-defbce on
+#defbce on
 shell $SHELL
-termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+#termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 #termcap * 'G0:S0=\E(%.:E0=\E(B:TY=iso2022'
 #termcapinfo xterm* ti@:te@
 
@@ -142,8 +142,11 @@ windowlist title '%{u .g} Num Flags Title%='
 windowlist string '%4n %{.y}%f%09=%{-} %t %='
 
 #rendition bell | monitor | silence | so attr [color]
-#rendition so =00
-rendition so "=d Kk"
+rendition bell    '=ub' 'RY'
+rendition monitor '=b'  'BW'
+rendition silence '=u'  'wk'
+rendition so      '=d'  'Kk'
+#rendition so       =00
 
 # caption string description:
 setenv a ""
