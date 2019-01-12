@@ -198,22 +198,22 @@ caption always "$a"
 unsetenv a
 
 # hardstatus string description:
-setenv a ""             # 
-setenv a "$a%{=u .y}"    # bg:. fg:yellow
-setenv a "$a%S"         # session
-#setenv a "$a%H"         # hostname
-setenv a "$a "          # 
-setenv a "$a%L="        # 
-setenv a "$a%{=u .c}"    # bg:. fg:blue
-setenv a "$a%-w"        # window list: start----------------------------
-setenv a "$a%46>"       # 
-setenv a "$a%{=urb .c}"   # bg:. fg:red reverce
-setenv a "$a%n %t"      # 現在のwindow番号・タイトル
-setenv a "$a%{=u .c}"    # bg:. fg:blue
-setenv a "$a%+w"        # window list: last-----------------------------
-setenv a "$a%-16="        # 
-setenv a "$a%{=u .y}"    # bg:. fg:yellow
-setenv a "$a[%l]"       # load average
+setenv a ""                # 
+setenv a "$a%{=u .y}"      # bg:. fg:yellow
+setenv a "$a%S"            # session
+#setenv a "$a%H"            # hostname
+setenv a "$a "             # 
+setenv a "$a%L="           # 
+setenv a "$a%{=u .c}"      # bg:. fg:blue
+setenv a "$a%-w"           # window list: start----------------------------
+setenv a "$a%46>"          # 
+setenv a "$a%{=urb .c}"    # bg:. fg:red reverce
+setenv a "$a%n %t"         # 現在のwindow番号・タイトル
+setenv a "$a%{=u .c}"      # bg:. fg:blue
+setenv a "$a%+w"           # window list: last-----------------------------
+setenv a "$a%-16="         # 
+setenv a "$a%{=u .y}"      # bg:. fg:yellow
+setenv a "$a[%l]"          # load average
 #hardstatus alwaysfirstline "$a"
 hardstatus alwayslastline "$a"
 unsetenv a
