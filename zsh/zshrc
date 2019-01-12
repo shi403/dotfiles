@@ -1,0 +1,163 @@
+#! env zsh
+# License : MIT
+# http://mollifier.mit-license.org/
+
+#-- for open msys2 for windows right click menu.
+#printf "---\n"; set | grep MSYSTEM;
+if [ "${OSTYPE}" = "msys" ] && [ -f /etc/zsh/zprofile ] && ! [ -v MSYSTEM ]; then source /etc/zsh/zprofile; fi
+#printf "---\n"; set | grep MSYSTEM;
+
+########################################
+# キーバインド {{{
+# emacs:-e vi:-v 風キーバインドにする
+bindkey -v
+
+#}}}
+########################################
+# ヒストリの設定
+HISTFILE=${HOME}/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt appendhistory autocd extendedglob nomatch notify
+
+setopt share_history;          # 他のターミナルとヒストリーを共有
+setopt hist_ignore_all_dups;   # ヒストリに追加されるコマンド行が古いものと同じなら古いものを削除
+setopt hist_ignore_space;      # スペースで始まるコマンド行はヒストリリストから削除
+setopt hist_verify;            # ヒストリを呼び出してから実行する間に一旦編集可能
+setopt hist_reduce_blanks;     # 余分な空白は詰めて記録
+setopt hist_save_no_dups;      # 古いコマンドと同じものは無視 
+setopt hist_no_store;          # historyコマンドは履歴に登録しない
+setopt hist_expand;            # 補完時にヒストリを自動的に展開         
+setopt inc_append_history;     # 履歴をインクリメンタルに追加
+
+function history-all { history -E 1 }
+
+# ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
+bindkey '^R' history-incremental-pattern-search-backward
+# history search
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
+########################################
+#-- 色を使用
+autoload -Uz colors
+colors
+
+# 環境変数
+export LANG=ja_JP.UTF-8
+export LC_CTYPE=ja_JP.UTF-8
+
+path=( 
+	/usr/local/opt/go/libexec/bin
+	/usr/local/opt 
+	$path 
+)
+########################################
+# プロンプト {{{
+# 1行表示
+# PROMPT="%~ %# "
+# 2行表示
+PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~
+%# "
+#PROMPT2="%_%% "
+SPROMPT="%r is correct? [n,y,a,e]: "
+
+
+# 単語の区切り文字を指定する
+autoload -Uz select-word-style
+select-word-style default
+# ここで指定した文字は単語区切りとみなされる
+# / も区切りと扱うので、^W でディレクトリ１つ分を削除できる
+zstyle ':zle:*' word-chars " /=;@:{},|"
+zstyle ':zle:*' word-style unspecified
+
+#}}}
+########################################
+# 補完 {{{
+# 補完機能を有効にする
+autoload -Uz compinit
+compinit
+
+# 補完で小文字でも大文字にマッチさせる
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# ../ の後は今いるディレクトリを補完しない
+zstyle ':completion:*' ignore-parents parent pwd ..
+
+# sudo の後ろでコマンド名を補完する
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
+                   /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+
+# ps コマンドのプロセス名補完
+zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+
+#}}}
+########################################
+# vcs_info {{{
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+
+zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
+zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
+
+function _update_vcs_info_msg() {
+    LANG=en_US.UTF-8 vcs_info
+    RPROMPT="${vcs_info_msg_0_}"
+}
+add-zsh-hook precmd _update_vcs_info_msg
+
+#}}}
+########################################
+# オプション
+setopt print_eight_bit      # 日本語ファイル名を表示可能にする
+setopt no_beep              # beep を無効にする
+setopt no_flow_control      # フローコントロールを無効にする
+setopt ignore_eof           # Ctrl+Dでzshを終了しない
+setopt interactive_comments # '#' 以降をコメントとして扱う
+setopt auto_cd              # ディレクトリ名だけでcdする
+setopt auto_pushd           # cd したら自動的にpushdする
+setopt pushd_ignore_dups    # 重複したディレクトリを追加しない
+setopt share_history        # 同時に起動したzshの間でヒストリを共有する
+setopt hist_ignore_all_dups # 同じコマンドをヒストリに残さない
+setopt hist_ignore_space    # スペースから始まるコマンド行はヒストリに残さない
+setopt hist_reduce_blanks   # ヒストリに保存するときに余分なスペースを削除する
+setopt extended_glob        # 高機能なワイルドカード展開を使用する
+
+########################################
+# エイリアス
+alias la='ls -a'
+alias ll='ls -la'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias mkdir='mkdir -p'
+
+alias vi='/usr/local/bin/vim'
+
+# sudo の後のコマンドでエイリアスを有効にする
+alias sudo='sudo '
+
+#-- グローバルエイリアス
+alias -g L='| less'
+alias -g G='| grep'
+
+alias ctags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+
+alias history='history -iD'
+alias hi=history
+########################################
+# OS 別の設定
+case ${OSTYPE} in
+    darwin*)
+        #Mac用の設定
+        export CLICOLOR=1
+        alias ls='ls -G -F'
+        ;;
+    linux*)
+        #Linux用の設定
+        alias ls='ls -F --color=auto'
+        ;;
+esac
+
+# vim:set ft=zsh:
