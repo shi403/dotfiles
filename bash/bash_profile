@@ -1,0 +1,22 @@
+#
+# ~/.bash_profile
+#
+
+export PATH=$PATH:/opt/vc/bin    #-- for Raspberry Pi
+export PATH=/usr/local/bin:${PATH}
+export PATH=~/bin:${PATH}
+
+export LANG=ja_JP.UTF-8
+
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages/
+
+set meta-flag on
+set kanji-code sjis
+set input-meta on
+set output-meta on
+set convert-meta off
+
+#-- .bash_profile の最後 --#
+#[[ -f ~/.bashrc ]] && . ~/.bashrc
+test -r ~/.bashrc && . ~/.bashrc
+
