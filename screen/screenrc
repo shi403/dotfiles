@@ -1,0 +1,174 @@
+
+escape ^t^t
+defscrollback 10000
+
+defutf8 on
+defkanji utf-8
+encoding utf-8 utf-8
+defencoding utf-8
+
+multiuser on
+vbell off
+vbell_msg "Bell"
+startup_message off
+autodetach on
+mousetrack on
+
+defflow off
+crlf off
+
+## current command name as window name
+shelltitle "$ |bash"
+#term screen-256color
+attrcolor b ".I"
+defbce on
+shell $SHELL
+
+#term screen-256color
+termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+#termcap * 'G0:S0=\E(%.:E0=\E(B:TY=iso2022'
+#termcapinfo xterm* ti@:te@
+
+#defencoding utf8
+#cjkwidth on
+
+#zombie "q^M"
+#bind d setenv DISPLAY
+#bind w windowlist -b
+#bind r eval 'echo "Resize window"' 'command -c resize'
+bind -c resize ^]  command
+bind -c resize j eval 'resize +1' 'command -c resize'
+bind -c resize k eval 'resize -1' 'command -c resize'
+#bind o focus
+#bind ^O focus
+#bind -c REGION 2 split
+#bind -c REGION 1 only
+#bind -c REGION 0 remove
+#bind -c REGION o focus
+#bind ^X command -c REGION
+#bind ^N next
+#bind ^P prev
+#bind ^U encoding utf8
+#bind ^E encoding euc
+#bind ^Q quit
+#bind R colon "screen ssh ^b^b"
+#bind P colon "^p"
+#bind ^K kill
+
+# Continuous window change
+bind ^n eval 'command -c window' 'next'
+bind ^p eval 'command -c window' 'prev'
+bind -c window n eval 'next'
+bind -c window p eval 'prev'
+bind -c window ^n eval 'command -c window' 'next'
+bind -c window ^p eval 'command -c window' 'prev'
+bind -c window ^q eval 'command -c window'
+
+# Focus (like vi)
+bind h  eval 'focus left'
+bind j  eval 'focus down'
+bind k  eval 'focus up'
+bind l  eval 'focus right'
+bind ^h eval    'focus left'
+bind -k kb eval 'focus left' #Backspace
+bind ^j eval    'focus down'
+bind ^k eval    'focus up'
+bind ^l eval    'focus right'
+
+#-- Split
+bind V split -v
+bind S split
+
+#-- Resize window
+bind e  eval 'command -c resize' 'echo "Resize window"'
+bind ^e eval 'command -c resize' 'echo "Resize window"'
+bind -c resize h eval 'command -c resize' 'resize -h -1'
+bind -c resize l eval 'command -c resize' 'resize -h +1'
+bind -c resize j eval 'command -c resize' 'resize -v +1'
+bind -c resize k eval 'command -c resize' 'resize -v -1'
+bind -c resize ^h eval 'command -c resize' 'resize -h -1'
+bind -c resize ^l eval 'command -c resize' 'resize -h +1'
+bind -c resize ^j eval 'command -c resize' 'resize -v +1'
+bind -c resize ^k eval 'command -c resize' 'resize -v -1'
+
+#bindkey -k k1 select 1
+#bindkey -k k2 select 2
+#bindkey -k k3 select 3
+#bindkey -k k4 select 4
+#bindkey -k k5 select 5
+#bindkey -k k6 select 6
+#bindkey -k k7 select 7
+#bindkey -k k8 select 8
+#bindkey -k k9 select 9
+#bindkey -k k; select 10
+
+
+# caption string description:
+setenv a ""
+setenv a "$a%?%F"          # if the window has the focus
+setenv a "$a%{=du Kw}"     #     bg:black fg:white underline
+setenv a "$a%:"            # else
+setenv a "$a%{=d kg}"      #     bg:white fg:
+setenv a "$a%?"            # endif
+
+#setenv a "$a%-w"           # window list: start----------------------------
+setenv a "$a%?%F"          # if the window has the focus
+setenv a "$a%{=db bw}"     #     bg:blue fg: bold
+setenv a "$a%:"            # else
+setenv a "$a%{=d kg}"      #     bg:white fg:black
+setenv a "$a%?"            # endif
+setenv a "$a%?%P"          # if copy/paste mode
+setenv a "$a%{=d Gw}"      #     bg:Green fg:white
+setenv a "$a%?"            # end if
+setenv a "$a "             # space
+setenv a "$a%n %t"         # window number & title
+setenv a "$a "             # space
+setenv a "$a%{-}"          #
+setenv a "$a%L="           # Mark the position for the next truncation
+setenv a "$a "             # space
+setenv a "$a%h"            # window' hardstatus
+setenv a "$a%L>"           # Truncate %L= ~ %L>,  gives marks at the truncation point
+#setenv a "$a%+w"           # window list: last-----------------------------
+
+setenv a "$a%="            # With the last %-0=, right alignment for following lines
+setenv a "$a%?%P"          # if copy/paste mode
+setenv a "$a*copy/paste* " #     draw this sentence
+setenv a "$a%?"            # end if
+setenv a "$a%?%E"          # if copy/paste mode
+setenv a "$a*command* "    #     draw this sentence
+setenv a "$a%?"            # end if
+
+setenv a "$a%?%F"          # if the window has the focus
+setenv a "$a%-14="          #     last 14-char
+setenv a "$a%:"            # else
+setenv a "$a%-0="          #     last 0-char
+setenv a "$a%?"            # endif
+setenv a "$a%{=dub kw}"    # bg:black fg:green
+setenv a "$a%02c:%s"       # clock
+setenv a "$a "             # space
+setenv a "$a%m/%d"         # Calender
+caption always "$a"
+unsetenv a
+
+# hardstatus string description:
+setenv a ""             # 
+setenv a "$a%{=u .y}"    # bg:. fg:yellow
+setenv a "$a%S"         # session
+#setenv a "$a%H"         # hostname
+setenv a "$a "          # 
+setenv a "$a%L="        # 
+setenv a "$a%{=u .c}"    # bg:. fg:blue
+setenv a "$a%-w"        # window list: start----------------------------
+setenv a "$a%46>"       # 
+setenv a "$a%{=urb .c}"   # bg:. fg:red reverce
+setenv a "$a%n %t"      # 現在のwindow番号・タイトル
+setenv a "$a%{=u .c}"    # bg:. fg:blue
+setenv a "$a%+w"        # window list: last-----------------------------
+setenv a "$a%-16="        # 
+setenv a "$a%{=u .y}"    # bg:. fg:yellow
+setenv a "$a[%l]"       # load average
+#hardstatus alwaysfirstline "$a"
+hardstatus alwayslastline "$a"
+unsetenv a
+hardstatus off
+
