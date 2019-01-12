@@ -27,8 +27,8 @@ function! LightlineMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-
-
+"
+"
 function! MyGitbranch()
   try
     "if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head())
@@ -41,6 +41,8 @@ function! MyGitbranch()
   return ''
 endfunction
 
+"
+"
 function! MyReadonly()
 	if &ft == "help" | return ""
 	elseif &readonly | return "\ue0a2"
@@ -48,6 +50,24 @@ function! MyReadonly()
 	endif
 endfunction
 
+"
+"
+function! MySepalator(font, side, level)
+	if s:font == 1
+		if s:side == 1 return "\ue0c4"
+		else           return "\ue0c5"
+		endif
+	else if s:font == 2
+		if s:side == 1 return "\ue0c6"
+		else           return "\ue0c7"
+		endif
+	else
+		if s:side == 1 return "|"
+		else           return ":"
+		endif
+	endif
+endfunction
+"
 let g:lightline.tab = {
 		\ 'active': [ 'tabnum', 'filename', 'modified'  ],
 		\ 'inactive': [ 'tabnum', 'filename', 'modified'  ]

@@ -2,6 +2,11 @@
 escape ^t^t
 defscrollback 10000
 
+# don't show startup message.
+startup_message off
+
+autodetach on
+
 defutf8 on
 defkanji utf-8
 encoding utf-8 utf-8
@@ -11,7 +16,6 @@ multiuser on
 vbell off
 vbell_msg "Bell"
 startup_message off
-autodetach on
 mousetrack on
 
 defflow off
@@ -20,11 +24,10 @@ crlf off
 ## current command name as window name
 shelltitle "$ |bash"
 #term screen-256color
+#term xterm-256color
 attrcolor b ".I"
 defbce on
 shell $SHELL
-
-#term screen-256color
 termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 #termcap * 'G0:S0=\E(%.:E0=\E(B:TY=iso2022'
 #termcapinfo xterm* ti@:te@
@@ -34,11 +37,8 @@ termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
 #zombie "q^M"
 #bind d setenv DISPLAY
-#bind w windowlist -b
+bind w windowlist -b
 #bind r eval 'echo "Resize window"' 'command -c resize'
-bind -c resize ^]  command
-bind -c resize j eval 'resize +1' 'command -c resize'
-bind -c resize k eval 'resize -1' 'command -c resize'
 #bind o focus
 #bind ^O focus
 #bind -c REGION 2 split
@@ -50,7 +50,7 @@ bind -c resize k eval 'resize -1' 'command -c resize'
 #bind ^P prev
 #bind ^U encoding utf8
 #bind ^E encoding euc
-#bind ^Q quit
+bind ^Q quit
 #bind R colon "screen ssh ^b^b"
 #bind P colon "^p"
 #bind ^K kill
@@ -79,6 +79,9 @@ bind ^l eval    'focus right'
 bind V split -v
 bind S split
 
+bind -c resize ^]  command
+bind -c resize j eval 'resize +1' 'command -c resize'
+bind -c resize k eval 'resize -1' 'command -c resize'
 #-- Resize window
 bind e  eval 'command -c resize' 'echo "Resize window"'
 bind ^e eval 'command -c resize' 'echo "Resize window"'
@@ -102,6 +105,45 @@ bind -c resize ^k eval 'command -c resize' 'resize -v -1'
 #bindkey -k k9 select 9
 #bindkey -k k; select 10
 
+# trigger for layout sub-commands
+bind ^Y eval 'command -c layout' 'layout show'
+bind y  eval 'command -c layout' 'layout show'
+
+# create/remove layout
+bind -c layout c eval 'layout new'    'layout show'
+bind -c layout X eval 'layout remove' 'layout show'
+
+# change the current layout title or number
+bind -c layout A colon 'layout title '
+bind -c layout N colon 'layout number '
+
+# switch to the layout identified by number or title (not prefix of a title)
+bind -c layout \' eval 'layout select' 'layout show'
+
+# switch to other layout
+bind -c layout n eval 'layout next'     'layout show'
+bind -c layout p eval 'layout prev'     'layout show'
+bind -c layout 0 eval 'layout select 0' 'layout show'
+bind -c layout 1 eval 'layout select 1' 'layout show'
+bind -c layout 2 eval 'layout select 2' 'layout show'
+bind -c layout 3 eval 'layout select 3' 'layout show'
+bind -c layout 4 eval 'layout select 4' 'layout show'
+bind -c layout 5 eval 'layout select 5' 'layout show'
+bind -c layout 6 eval 'layout select 6' 'layout show'
+bind -c layout 7 eval 'layout select 7' 'layout show'
+bind -c layout 8 eval 'layout select 8' 'layout show'
+bind -c layout 9 eval 'layout select 9' 'layout show'
+
+# continuous switch to other layout
+bind -c layout ^N eval 'layout next' 'command -c layout' 'layout show'
+bind -c layout ^P eval 'layout prev' 'command -c layout' 'layout show'
+
+windowlist title '%{u .g} Num Flags Title%='
+windowlist string '%4n %{.y}%f%09=%{-} %t %='
+
+#rendition bell | monitor | silence | so attr [color]
+#rendition so =00
+rendition so "=d Kk"
 
 # caption string description:
 setenv a ""

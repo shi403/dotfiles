@@ -50,7 +50,7 @@ endif
 ""--" B Plugin Manager: vim-plug{{{1
 ""------------------------------------------------------------------------
 " -- Prepare from shell
-" $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+" $ curl -fLo ~/.dotfiles/vim/autoload/plug.vim --create-dirs \
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
 " check the specified plugin is installed
@@ -138,7 +138,7 @@ nmap ga <Plug>(EasyAlign)
 " }}}
 "}}}1
 
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 "--" C Foldings: 折り畳み設定 {{{1
 "---------------------------------------------------------------------------
 " LeafCage/foldCC:
@@ -207,45 +207,45 @@ let g:foldCCnavi_maxchars = 120
 
 "}}}1 " Foldings:
 
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 " Netrw:{{{1
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 if s:is_plugged("vimfiler.vim")
 
-    let g:vimfiler_as_default_explorer=1
-    let g:vimfiler_safe_mode_by_default=0
-    
-    call vimfiler#custom#profile('default', 'context', { 
-    		\ 'safe' : 0, 
-    		\ 'auto_expand' : 1, 
-    		\ 'parent' : 0, 
-    		\ }) 
-     
-    if has('win32') || has('win64') 
-    	" For Windows. 
-    	let g:vimfiler_detect_drives = [ 
-    			\ 'C:/', 'D:/', 'E:/', 'F:/', 'G:/', 'H:/', 'I:/', 
-    			\ 'J:/', 'K:/', 'L:/', 'M:/', 'N:/'] 
-    	" Use trashbox. 
-    	let g:unite_kind_file_use_trashbox = 1 
-    else 
-    	" Like Textmate icons. 
-    	let g:vimfiler_tree_leaf_icon     = ' ' 
-    	let g:vimfiler_tree_opened_icon   = '▾' 
-    	let g:vimfiler_tree_closed_icon   = '▸' 
-    	let g:vimfiler_file_icon          = ' ' 
-    	let g:vimfiler_readonly_file_icon = '✗' 
-    	let g:vimfiler_marked_file_icon   = '✓' 
-    endif 
+	let g:vimfiler_as_default_explorer=1
+	let g:vimfiler_safe_mode_by_default=0
 
-   " カーソル位置の単語をgrep検索
+	call vimfiler#custom#profile('default', 'context', { 
+			\ 'safe' : 0, 
+			\ 'auto_expand' : 1, 
+			\ 'parent' : 0, 
+			\ }) 
+
+	if has('win32') || has('win64') 
+		" For Windows. 
+		let g:vimfiler_detect_drives = [ 
+				\ 'C:/', 'D:/', 'E:/', 'F:/', 'G:/', 'H:/', 'I:/', 
+				\ 'J:/', 'K:/', 'L:/', 'M:/', 'N:/'] 
+		" Use trashbox. 
+		let g:unite_kind_file_use_trashbox = 1 
+	else 
+		" Like Textmate icons. 
+		let g:vimfiler_tree_leaf_icon     = ' ' 
+		let g:vimfiler_tree_opened_icon   = '▾' 
+		let g:vimfiler_tree_closed_icon   = '▸' 
+		let g:vimfiler_file_icon          = ' ' 
+		let g:vimfiler_readonly_file_icon = '✗' 
+		let g:vimfiler_marked_file_icon   = '✓' 
+	endif 
+
+	" カーソル位置の単語をgrep検索
 	nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 
 	" unite grep に ag(The Silver Searcher) を使う
 	if executable('ag')
-	  let g:unite_source_grep_command = 'ag'
-	  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-	  let g:unite_source_grep_recursive_opt = ''
+		let g:unite_source_grep_command = 'ag'
+		let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+		let g:unite_source_grep_recursive_opt = ''
 	endif
 
 	nnoremap <C-e> :VimFiler -split -simple -winwidth=35 -no-quit<CR> 
@@ -257,15 +257,14 @@ endif
 
 "}}}1
 
-
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 " Tagbar Taglist:{{{1
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 "source ~/.vim/rc/taglist.rc.vim
 
 if s:is_plugged("tagbar")
 
-	source ~/.vim/rc/tagbar.rc.vim
+	execute 'source' expand(g:dir_dotvim . '/rc/tagbar.rc.vim')
 
 else
 
@@ -273,16 +272,16 @@ endif
 
 "}}}1 " Taglist:
 
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 " StatusLine TabLine:{{{1
-"---------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 set laststatus=2
 set showtabline=2 " 常にタブラインを表示
 
 if s:is_plugged("lightline.vim")
 
 	"call s:source_rc('lightline.rc.vim') 
-	source ~/.dotfiles/vim/rc/lightline.rc.vim
+	execute 'source' expand(g:dir_dotvim . '/rc/lightline.rc.vim')
 
 else
 
@@ -305,14 +304,14 @@ endfor
 
 map <silent> [Tag]c :tablast <bar> tabnew<CR>
 map <silent> [Tag]x :tabclose<CR>
-map <silent> [Tag]n :tabnext<CR>
+map <silent> [Tag]n :tabnext <CR>
 map <silent> [Tag]p :tabprevious<CR>
 
 "-- }}}1" Status Line:
 
-"--------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 " W Search Options: {{{1
-"--------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 set   hlsearch
 set noincsearch     " do incremental searching
 set   ignorecase    " 検索時に大文字小文字を無視
@@ -328,18 +327,18 @@ let g:ctrlp_user_command = 'ag %s -l'
 
 " }}}1 W Search Options:
 
-"--------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 "--" X Complete: {{{1
-"--------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 set   showcmd		    " display incomplete commands
 set   wildmenu
 set   wildmode=list:longest
 
 "--" X Complete: }}}1
 
-"--------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 " X Mouse Event: {{{1
-"--------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 set mouse=a
 
 "-- マウス利用可能モード
@@ -348,9 +347,9 @@ nnoremap <silent> ,mm :<C-u>set mouse=a<CR>
 nnoremap <silent> ,mn :<C-u>set mouse=<CR>
 " }}}1 X Mouse Event:
 
-"------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 "--" Color Scheme: {{{1
-"------------------------------------------------------------------------
+"-------------------------------------------------------------------------
 set background=dark
 let g:solarized_termcolors=256
 colorscheme molokai
@@ -405,9 +404,9 @@ command! -count -nargs=1 ContinuousNumber
 	\		call cursor('.', c) |
 	\	endfor
 
-"--------------------------------------------------------------------------- 
+"------------------------------------------------------------------------ 
 " Disable Default Plugins:  {{{
-"--------------------------------------------------------------------------- 
+"------------------------------------------------------------------------ 
 "let g:loaded_2html_plugin      = 1 
 "let g:loaded_logiPat           = 1 
 "let g:loaded_getscriptPlugin   = 1 
@@ -427,3 +426,4 @@ command! -count -nargs=1 ContinuousNumber
 "let g:loaded_zipPlugin         = 1 
 " }}} Disable Default Plugins: 
 
+" vim:foldmethod=marker:foldlevel=0
