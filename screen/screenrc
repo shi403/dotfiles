@@ -23,8 +23,9 @@ crlf off
 
 ## current command name as window name
 shelltitle "$ |bash"
-term screen-256color
 #term xterm-256color
+#term screen-256color
+term screen.xterm-256color
 attrcolor b ".I"
 # enable background-color-erase setting.
 #defbce on
@@ -33,7 +34,7 @@ shell $SHELL
 #termcap * 'G0:S0=\E(%.:E0=\E(B:TY=iso2022'
 #termcapinfo xterm* ti@:te@
 
-#cjkwidth on
+cjkwidth on
 
 #zombie "q^M"
 #bind d setenv DISPLAY
@@ -55,6 +56,18 @@ bind ^Q quit
 #bind P colon "^p"
 #bind ^K kill
 
+#-- window select
+#bindkey -k k1 select 1
+#bindkey -k k2 select 2
+#bindkey -k k3 select 3
+#bindkey -k k4 select 4
+#bindkey -k k5 select 5
+#bindkey -k k6 select 6
+#bindkey -k k7 select 7
+#bindkey -k k8 select 8
+#bindkey -k k9 select 9
+#bindkey -k k; select 10
+
 # Continuous window change
 bind ^n eval 'command -c window' 'next'
 bind ^p eval 'command -c window' 'prev'
@@ -64,19 +77,20 @@ bind -c window ^n eval 'command -c window' 'next'
 bind -c window ^p eval 'command -c window' 'prev'
 bind -c window ^q eval 'command -c window'
 
+#-- layout
+bind V split -v
+bind S split
+
 # Focus (like vi)
 bind  h eval 'focus left'
 bind  j eval 'focus down'
 bind  k eval 'focus up'
 bind  l eval 'focus right'
-bind ^h eval    'focus left'
-bind ^j eval    'focus down'
-bind ^k eval    'focus up'
-bind ^l eval    'focus right'
+bind ^h eval 'focus left'
+bind ^j eval 'focus down'
+bind ^k eval 'focus up'
+bind ^l eval 'focus right'
 bind -k kb eval 'focus left' #Backspace
-
-bind V split -v
-bind S split
 
 bind -c resize ^]  command
 #-- Resize window
@@ -91,25 +105,14 @@ bind -c resize ^l eval 'command -c resize' 'resize -h +1'
 bind -c resize ^j eval 'command -c resize' 'resize -v +1'
 bind -c resize ^k eval 'command -c resize' 'resize -v -1'
 
-#bindkey -k k1 select 1
-#bindkey -k k2 select 2
-#bindkey -k k3 select 3
-#bindkey -k k4 select 4
-#bindkey -k k5 select 5
-#bindkey -k k6 select 6
-#bindkey -k k7 select 7
-#bindkey -k k8 select 8
-#bindkey -k k9 select 9
-#bindkey -k k; select 10
-
 # window re-numbering
 # override default `N'(number) mapping
 bind N colon 'number '
 
-#-- Split
+#-- layout
 # trigger for layout sub-commands
 bind ^Y eval 'command -c layout' 'layout show'
-bind y  eval 'command -c layout' 'layout show'
+bind  y eval 'command -c layout' 'layout show'
 
 # create/remove layout
 bind -c layout c eval 'layout new'    'layout show'
@@ -144,11 +147,14 @@ windowlist title '%{u .g} Num Flags Title%='
 windowlist string '%4n %{.y}%f%09=%{-} %t %='
 
 #rendition bell | monitor | silence | so attr [color]
-rendition bell    '=ub' 'RY'
+rendition bell    '=ub' 'yk'
 rendition monitor '=b'  'BW'
-rendition silence '=u'  'wk'
-rendition so      '=d'  'Kk'
+rendition silence '=u'  '.w'
+rendition so      '=d'  'Kw'
 #rendition so       =00
+
+defmonitor on
+defsilence on
 
 # caption string description:
 setenv a ""

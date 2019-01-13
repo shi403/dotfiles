@@ -1,14 +1,17 @@
 " Note: Skip initialization for vim-tiny or vim-small.
 " profile start profile.txt
 " profile file ~/.vim/rc/*
+if !1 | finish | endif
+
 if 1
 "  execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/vimrc'
 endif
 
 " Note: Skip initialization for vim-tiny or vim-small.
-if !1 | finish | endif
 
-let g:dir_dotvim='~/.dotfiles/vim'
+if !exists('g:dir_dotvim')
+	let g:dir_dotvim='~/.dotfiles/vim'
+endif
 
 if filereadable(expand(g:dir_dotvim . '/rc/vimrc'))
 		execute 'source' expand(g:dir_dotvim . '/rc/vimrc')
