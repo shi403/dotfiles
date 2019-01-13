@@ -150,7 +150,7 @@ windowlist string '%4n %{.y}%f%09=%{-} %t %='
 rendition bell    '=ub' 'yk'
 rendition monitor '=b'  'BW'
 rendition silence '=u'  '.w'
-rendition so      '=d'  'Kw'
+rendition so      '-u'  'Kw'
 #rendition so       =00
 
 defmonitor on
