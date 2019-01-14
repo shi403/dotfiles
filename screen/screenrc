@@ -21,20 +21,34 @@ mousetrack on
 defflow off
 crlf off
 
+shell $SHELL
 ## current command name as window name
 shelltitle "$ |bash"
-#term xterm-256color
-#term screen-256color
-term screen.xterm-256color
 attrcolor b ".I"
 # enable background-color-erase setting.
 #defbce on
-shell $SHELL
-#termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-#termcap * 'G0:S0=\E(%.:E0=\E(B:TY=iso2022'
-#termcapinfo xterm* ti@:te@
 
 cjkwidth on
+
+# Term
+term "screen-256color"
+#term "xterm-256color"
+#term "screen-256color"
+#term "screen.xterm-256color"
+
+# not change the window size when it is attached
+termcapinfo xterm* is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
+# xterm understands both im/ic and doesn't have a status line.
+# Note: Do not specify im and ic in the real termcap/info file as
+# some programs (e.g. vi) will (no,no, may (jw)) not work anymore.
+termcap xterm* hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+terminfo xterm* hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
+
+# Do not use xterms alternate window buffer.
+# This one would not add lines to the scrollback buffer.
+termcapinfo xterm* 'ti@:te@'
+#termcapinfo xterm* ti=\E7\E[?47l
 
 #zombie "q^M"
 #bind d setenv DISPLAY
