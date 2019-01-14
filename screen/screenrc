@@ -28,7 +28,7 @@ attrcolor b ".I"
 # enable background-color-erase setting.
 #defbce on
 
-cjkwidth on
+#cjkwidth on
 
 # Term
 term "screen-256color"
