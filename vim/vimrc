@@ -9,12 +9,10 @@ endif
 
 " Note: Skip initialization for vim-tiny or vim-small.
 
-if !exists('g:dir_dotvim')
-	let g:dir_dotvim='~/.dotfiles/vim'
+if has('vim_starting') 
+	execute 'set runtimepath+='. fnamemodify(expand('<sfile>'), ':h')
 endif
 
-if filereadable(expand(g:dir_dotvim . '/rc/vimrc'))
-		execute 'source' expand(g:dir_dotvim . '/rc/vimrc')
-endif
+execute 'source' fnamemodify(expand('<sfile>'), ':h') . '/rc/vimrc'
 
 " vim:foldmethod=marker:foldlevel=2

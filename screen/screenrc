@@ -91,6 +91,9 @@ bind -c window ^n eval 'command -c window' 'next'
 bind -c window ^p eval 'command -c window' 'prev'
 bind -c window ^q eval 'command -c window'
 
+bind  m eval 'mousetrack on ' 'echo "mousetrack on"'
+bind  M eval 'mousetrack off' 'echo "mousetrack off"'
+
 #-- layout
 bind V split -v
 bind S split
@@ -133,7 +136,7 @@ bind -c layout c eval 'layout new'    'layout show'
 bind -c layout X eval 'layout remove' 'layout show'
 
 # change the current layout title or number
-bind -c layout A colon 'layout title '
+bind -c layout A colon 'layout title  '
 bind -c layout N colon 'layout number '
 
 # switch to the layout identified by number or title (not prefix of a title)

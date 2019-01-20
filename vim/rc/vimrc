@@ -8,12 +8,6 @@ endif
 ""------------------------------------------------------------------------
 ""--" A Vim Starting: {{{1
 ""------------------------------------------------------------------------
-if has('vim_starting') 
-
-	execute expand('set runtimepath+='. g:dir_dotvim)
-
-endif
-
 function! s:source_rc(path, ...) abort "{{{ 
 	let use_global = get(a:000, 0, !has('vim_starting')) 
 	let abspath = resolve(expand(g:dir_dotvim . '/rc/' . a:path)) 
@@ -99,6 +93,8 @@ call plug#begin('$CACHE/vim-plug')
 
 	"-- grep/search faster
 	Plug 'rking/ag.vim'
+
+	Plug 'tyru/capture.vim'
 
 	"-- コンテキストに合わせてftを切り替え
 	"Plug 'osyo-manga/vim-precious'
@@ -277,6 +273,7 @@ endif
 "-------------------------------------------------------------------------
 set laststatus=2
 set showtabline=2 " 常にタブラインを表示
+set cmdheight=2
 
 if s:is_plugged("lightline.vim")
 
@@ -332,7 +329,19 @@ let g:ctrlp_user_command = 'ag %s -l'
 "-------------------------------------------------------------------------
 set   showcmd		    " display incomplete commands
 set   wildmenu
-set   wildmode=list:longest
+set   wildchar=<tab>
+"set   wildmode=list:longest
+set   wildmode=list:longest,list:full          " zsh like complete
+set   wildignore+=.DS_Store
+set   wildignore+=.git,.svn
+set   wildignore+=*.o,*.obj,*.rbc,*.dll,*.exe
+set   wildignore+=*.png,*.jpg,*.gif
+set   wildignore+=*.so,*.sw?
+set   wildignore+=*.out,*.aux
+set   wildignore+=*.spl
+set   wildignore+=*.luac,*.jar,*.pyc,.class
+set   completeopt=menuone,preview
+set   complete=.,w,b,u,t,i,k
 
 "--" X Complete: }}}1
 
@@ -403,6 +412,17 @@ command! -count -nargs=1 ContinuousNumber
 	\		exec 'normal! j' . n . <q-args> |
 	\		call cursor('.', c) |
 	\	endfor
+
+" A better for me window management system... inspired by Spacemacs!
+nnoremap <leader>wh <C-W>h
+nnoremap <leader>wl <C-W>l
+nnoremap <leader>wj <C-W>j
+nnoremap <leader>wk <C-W>k
+nnoremap <leader>ws :sp<CR>
+nnoremap <leader>wv :vsp<CR>
+nnoremap <leader>wc :close<CR>
+nnoremap <leader>wn :vne<CR>
+nnoremap <leader>wo :only<CR>
 
 "------------------------------------------------------------------------ 
 " Disable Default Plugins:  {{{
