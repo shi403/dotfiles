@@ -3,6 +3,8 @@
 " profile file ~/.vim/rc/*
 if !1 | finish | endif
 
+scriptencoding utf-8
+
 if 1
 "  execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/vimrc'
 endif
@@ -14,5 +16,12 @@ if has('vim_starting')
 endif
 
 execute 'source' fnamemodify(expand('<sfile>'), ':h') . '/rc/vimrc'
+
+if has('gui_running')
+	echo 'load gvimrc'
+	execute 'source' fnamemodify(expand('<sfile>'), ':h') . '/rc/gvimrc'
+else
+	echo 'noload gvimrc'
+endif
 
 " vim:foldmethod=marker:foldlevel=2

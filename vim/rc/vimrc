@@ -5,9 +5,16 @@ if !exists('g:dir_dotvim')
 	let g:dir_dotvim='~/.dotfiles/vim'
 endif
 
-""------------------------------------------------------------------------
-""--" A Vim Starting: {{{1
-""------------------------------------------------------------------------
+" == Encoding settings. == {{{1
+" Use utf-8.
+if &encoding !=? 'utf-8'
+  let &termencoding = &encoding
+  setglobal encoding=utf-8
+endif
+
+scriptencoding utf-8
+
+""--" A Vim Starting: --- {{{1
 function! s:source_rc(path, ...) abort "{{{ 
 	let use_global = get(a:000, 0, !has('vim_starting')) 
 	let abspath = resolve(expand(g:dir_dotvim . '/rc/' . a:path)) 
@@ -38,9 +45,6 @@ if has('vim_starting')
 	call s:source_rc('func.rc.vim') 
 	call s:source_rc('init.rc.vim') 
 endif 
-" }}}1 A Vim Starting:
-
-""------------------------------------------------------------------------
 ""--" B Plugin Manager: vim-plug{{{1
 ""------------------------------------------------------------------------
 " -- Prepare from shell
@@ -87,6 +91,9 @@ call plug#begin('$CACHE/vim-plug')
 	Plug 'nachumk/systemverilog.vim'
 	Plug 'vhda/verilog_systemverilog.vim'
 	Plug 'ervandew/supertab'
+
+	"-- syntax check
+	Plug 'scrooloose/syntastic'
 
 	"-- script quick-run
 	Plug 'thinca/vim-quickrun'
@@ -161,7 +168,7 @@ set foldlevel=1
 set foldnestmax=2
 
 "-- verilog_systemverilog
-let g:verilog_syntax_fold_lst = "package,class,function,task,interface,define"
+let g:verilog_syntax_fold_lst = 'package,class,function,task,interface,define'
 
 let perl_fold=1
 
@@ -181,7 +188,7 @@ nnoremap  z[     :<C-u>call <SID>put_foldmarker(0)<CR>
 nnoremap  z]     :<C-u>call <SID>put_foldmarker(1)<CR>
 function! s:put_foldmarker(foldclose_p) "{{{
 	let crrstr = getline('.')
-	let padding = crrstr=='' ? '' : crrstr=~'\s$' ? '' : ' '
+	let padding = crrstr==#'' ? '' : crrstr=~#'\s$' ? '' : ' '
 	let [cms_start, cms_end] = ['', '']
 	let outside_a_comment_p = synIDattr(synID(line('.'), col('$')-1, 1), 'name') !~? 'comment'
 	if outside_a_comment_p
@@ -206,7 +213,7 @@ let g:foldCCnavi_maxchars = 120
 "-------------------------------------------------------------------------
 " Netrw:{{{1
 "-------------------------------------------------------------------------
-if s:is_plugged("vimfiler.vim")
+if s:is_plugged('vimfiler.vim')
 
 	let g:vimfiler_as_default_explorer=1
 	let g:vimfiler_safe_mode_by_default=0
@@ -258,7 +265,7 @@ endif
 "-------------------------------------------------------------------------
 "source ~/.vim/rc/taglist.rc.vim
 
-if s:is_plugged("tagbar")
+if s:is_plugged('tagbar')
 
 	execute 'source' expand(g:dir_dotvim . '/rc/tagbar.rc.vim')
 
@@ -275,7 +282,7 @@ set laststatus=2
 set showtabline=2 " 常にタブラインを表示
 set cmdheight=2
 
-if s:is_plugged("lightline.vim")
+if s:is_plugged('lightline.vim')
 
 	"call s:source_rc('lightline.rc.vim') 
 	execute 'source' expand(g:dir_dotvim . '/rc/lightline.rc.vim')
@@ -290,19 +297,20 @@ command! -bar LightlineUpdate
 	\ call lightline#colorscheme()|
 	\ call lightline#update()
 
-"-- Tab prefix key.
-nnoremap  [Tag]   <Nop>
-nmap    t [Tag]
+"-- Tabpage operation.
+nnoremap <Space>t <Nop>
+nnoremap <silent> <Space>tn :<C-u>tabnew<CR>
+nnoremap <silent> <Space>tc :<C-u><C-r>=v:count?v:count:''<CR>tabclose<CR>
 
-"--" Tab Jump: t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
-for n in range(1, 9)
-  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+"--" Tab Jump: <Space>t1 で1番左のタブ、<Space>t2 で1番左から2番目のタブにジャンプ
+for n in range(1, 7)
+  execute 'nnoremap <silent> <Space>t'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 
-map <silent> [Tag]c :tablast <bar> tabnew<CR>
-map <silent> [Tag]x :tabclose<CR>
-map <silent> [Tag]n :tabnext <CR>
-map <silent> [Tag]p :tabprevious<CR>
+"map <silent> [Tag]c :tablast <bar> tabnew<CR>
+"map <silent> [Tag]x :tabclose<CR>
+"map <silent> [Tag]n :tabnext <CR>
+"map <silent> [Tag]p :tabprevious<CR>
 
 "-- }}}1" Status Line:
 
@@ -343,8 +351,18 @@ set   wildignore+=*.luac,*.jar,*.pyc,.class
 set   completeopt=menuone,preview
 set   complete=.,w,b,u,t,i,k
 
+" ポップアップメニューに表示される項目数
+set pumheight=8
+
 "--" X Complete: }}}1
 
+"-------------------------------------------------------------------------
+"--" Syntax: {{{1
+"-------------------------------------------------------------------------
+let g:syntastic_vim_checkers = ['vint']
+
+"--" Syntax: }}}1
+"
 "-------------------------------------------------------------------------
 " X Mouse Event: {{{1
 "-------------------------------------------------------------------------
@@ -362,6 +380,9 @@ nnoremap <silent> ,mn :<C-u>set mouse=<CR>
 set background=dark
 let g:solarized_termcolors=256
 colorscheme molokai
+
+" 100 桁以上はハイライトしない
+set synmaxcol=200
 
 "--" Color Scheme: }}}1
 
@@ -446,4 +467,4 @@ nnoremap <leader>wo :only<CR>
 "let g:loaded_zipPlugin         = 1 
 " }}} Disable Default Plugins: 
 
-" vim:foldmethod=marker:foldlevel=0
+" vim:foldmethod=marker:foldlevel=10
