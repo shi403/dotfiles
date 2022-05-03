@@ -1,0 +1,3 @@
+
+
+execute 'source ~/.vim/vimrc'

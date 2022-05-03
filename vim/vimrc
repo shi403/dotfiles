@@ -5,21 +5,17 @@ if !1 | finish | endif
 
 scriptencoding utf-8
 
+let s:filedir = fnamemodify(expand('<sfile>'), ':h')
 if 1
-"  execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/vimrc'
+	execute 'source' s:filedir . '/rc/vimrc'
+	if has('vim_starting') 
+		execute 'set runtimepath+='. s:filedir
+	endif
 endif
-
-" Note: Skip initialization for vim-tiny or vim-small.
-
-if has('vim_starting') 
-	execute 'set runtimepath+='. fnamemodify(expand('<sfile>'), ':h')
-endif
-
-execute 'source' fnamemodify(expand('<sfile>'), ':h') . '/rc/vimrc'
 
 if has('gui_running')
 	echo 'load gvimrc'
-	execute 'source' fnamemodify(expand('<sfile>'), ':h') . '/rc/gvimrc'
+	execute 'source' s:filedir . '/rc/gvimrc'
 else
 	echo 'noload gvimrc'
 endif
