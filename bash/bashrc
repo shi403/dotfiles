@@ -1,162 +1,55 @@
-#
-# ~/.bashrc
-#
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#-- 
-#-- .bashrc は対話モードの bash を起動する時に毎回実行されます。
-#-- 
-#-- 具体的な用途は:
-#-- ・環境変数でない変数を設定する (export しない変数)
-#-- ・エイリアスを定義する
-#-- ・シェル関数を定義する
-#-- ・コマンドライン補完の設定をする
-#-- これらは bash を起動する度に毎回設定する必要があるものです。
-#-- 
-#
-#PATH=C:\MinGW\bin;C:\MinGW\msys\1.0\bin
-#PATH=C:\PROGRAM FILES (X86)\AMD APP\BIN\X86_64
-#C:\PROGRAM FILES (X86)\AMD APP\BIN\X86
-#C:\PROGRAM FILES (X86)\INTEL\ICLS CLIENT
-#C:\PROGRAM FILES\INTEL\ICLS CLIENT
-#C:\Windows\SYSTEM32
-#C:\Windows
-#C:\Windows\SYSTEM32\WBEM
-#C:\PROGRAM FILES (X86)\ATI TECHNOLOGIES\ATI.ACE\CORE-STATIC
-#C:\PROGRAM FILES\MICROSOFT SQL SERVER\110\TOOLS\BINN
-#C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0
-#C:\PROGRAM FILES (X86)\GDIPP
-#C:\APPLI\VIM74-WIN64
-#C:\PROGRAM FILES (X86)\IVI FOUNDATION\IVI\BIN
-#C:\PROGRAM FILES\IVI FOUNDATION\IVI\BIN
-#C:\PROGRAM FILES\IVI FOUNDATION\VISA\WIN64\BIN
-#C:\PROGRAM FILES (X86)\IVI FOUNDATION\VISA\WINNT\BIN
-#C:\PROGRAM FILES\TORTOISESVN\BIN
-#C:\PROGRAM FILES (X86)\MICROCHIP\XC8\V1.31\BIN
-#C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL
-#C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT
-#C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL
-#C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT
-#c:\Program Files\WIDCOMM\Bluetooth Software
-#c:\Program Files\WIDCOMM\Bluetooth Software\syswow64
-#C:\Program Files (x86)\Git\cmd
-#C:\Program Files (x86)\Git\bin
-#C:\ProgramData\chocolatey\bin
-#
+[ -f ~/.dotfiles/bash/history.sh ] && . ~/.dotfiles/bash/history.sh 
 
-#PATH=/bin:$PATH
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
-#-- bindkey
-#-- bind-key vi-mode
-set -o vi
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
 
-#-- PROMPT
-#PS1="$ "
-#PS1="[\u@\h \W] \\$ "
-PS1='\[\e[1;32m\]\u@\h:\w${text}$\[\e[m\] '
-PS1='\[\e[1;36m\]\d \[\e[1;32m\]\t \[\e[1;33m\]\u@\[\e[1;35m\]\h:\w\$\[\e[0;31m\] '
-PS1='\u@\h:\w\$ \[\033[01;32m\]$(if git status &>/dev/null;then echo git[branch:$(git branch | cut -d" "  -f2-) change:$(git status -s |wc -l)];fi)\[\033[00m\] '
-PS1='\[\e[1;36m\]\u@\h:\[\e[m\][\#]\$ \[\033[01;32m\]$(if git status &>/dev/null;then echo git[branch:$(git branch | cut -d" "  -f2-) change:$(git status -s |wc -l)];fi)\[\033[00m\] '
-PS1='\[\e[1;36m\]\u@\h:\[\e[m\][\#]\$ \[\033[01;32m\]$(if git status &>/dev/null;then echo git[branch:$(git branch | cut -d" "  -f2-) change:$(git status -s |wc -l)];fi)\[\033[00m\] '
-#PS1='\[\e[1;32m\]\u@\h:\w${text}$\[\e[m\] '
-#PS1='\u@\h:\w\$ \[\033[01;32m\]$(if git status &>/dev/null;then echo git[branch:$(git branch | cut -d" "  -f2-) change:$(git status -s |wc -l)];fi)\[\033[00m\] '
-#PS1='\[\e[1;32m\]\u@\h:\w${text}%\[\e[m\] '
-PS1='\[\e[0;36m\]\u@\h \[\e[1;36m\][\d \t]\[\e[1;37m\][\!]%\[\e[m\] \[\033[01;32m\]$(if git status &>/dev/null;then echo git[branch:$(git branch | cut -d" "  -f2-) change:$(git status -s |wc -l)];fi)\[\033[00m\] '
-#PS1='\u@\h:\w\$ \[\033[01;32m\]%(if git status &>/dev/null;then echo git[branch:$(git branch | cut -d" "  -f2-) change:$(git status -s |wc -l)];fi)\[\033[00m\] '
-#PS1="[\t \u@\h \W]\$ "
-#
-# リダイレクトで上書きする事を許可しない。
-set noclobber
-# ^Dでログアウトしない。
-set -o ignoreeof
-unset autologout
-# ^Iで補完可能な一覧を表示する。(曖昧補完)
-set autolist=ambiguous
-# 補完の機能を拡張する。
-set complete=enhance 
-# 補完時にスペルチェックをする。
-#set autocorrect
-# 補完時にヒストリを自動的に展開する。
-set autoexpand
-#set correct=cmd
-# ディレクトリスタックを保存する。
-set savedirs
-# rm * を実行する前に確認する。
-set rmstar
-set echo_style=both
-set ellipsis
-#set fignore=(.o )
-set histdup=erase
-set history=100
-#set savehist=( $history merge )
-set listjobs=long
-set listmaxrows=23
-#set noglob
-set -o notify
-set showdots
-set symlinks=expand
-set dspmbyte=utf8
-set filec
-set beep
-stty cs8 -istrip -parenb
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-# ignoredups = ignoredups + ignorespace
-export HISTCONTROL=ignoredups
+[ -f ~/.dotfiles/bash/prompt.sh ] && . ~/.dotfiles/bash/prompt.sh
 
-# append to the history file, don't overwrite it
-shopt -s histappend
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=2000
-function share_history {
-	history -a
-	history -c
-	history -r
-}
-PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'share_history'
-shopt -u histappend
-export HISTSIZE=9999
-#ignorespace+ignoredups = ignoreboth
-export HISTCONTROL=ignoreboth
-export HISTTIMEFORMAT='%Y/%m/%d %T '
-export HISTIGNORE="fg*:bg*:history*:cd"
+#[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+[ -f ~/.dotfiles/bash/aliases.sh ] && . ~/.dotfiles/bash/aliases.sh
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-export HISTSIZE=9999
-export HISTFILESIZE=2000
-
-
-export VTE_CJK_WIDTH=1
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
 fi
 
-#--- GUI Tools ---#
+# -- FZF-setings
+# ----------------
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_CTRL_T_OPTS='--preview "bat  --color=always --style=header,grid --line-range :100 {}"'
+export FZF_DEFAULT_OPTS="--reverse --inline-info"
+#export FZF_DEFAULT_COMMAND='ag -g ""'
 
-#--- Administrator Tools ---#
-
-set input-meta on
-set output-meta on
-set convert-meta off
-
-case ${TERM} in
-  xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
-    export PS1='\u@\h:\W\$ '
-    ;;
-  screen*)
-    export PS1='\u@\h:\W\$ '
-    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'echo -ne "\033k\033\0134\033k$(basename $(pwd))\033\\"'
-    ;;
-esac
-
+# -- Perl-setings
+# ----------------
+PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 
