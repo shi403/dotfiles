@@ -10,37 +10,47 @@ endif
 
 scriptencoding utf-8
 
+let $CONFIG = empty($XDG_CONFIG_HOME) ? expand('$HOME/.config') : $XDG_CONFIG_HOME
+let $CACHE  = empty($XDG_CACHE_HOME)  ? expand('$HOME/.cache')  : $XDG_CACHE_HOME
+let $DATA   = empty($XDG_DATA_HOME)   ? expand('$HOME/.cache')  : $XDG_DATA_HOME
+let $SSH_ASKPASS = ''
+
+if has('vim_starting') && v:version < 800
+	echo 'Caution!!! Please use vim80 or over.'
+	finish
+endif
+
 ""--" A Vim Starting: --- {{{1
-function! s:source_rc(path, ...) abort "{{{ 
-	let use_global = get(a:000, 0, !has('vim_starting')) 
-	let abspath = resolve(expand('~/.vim/rc/' . a:path)) 
-	if !use_global 
+function! s:source_rc(path, ...) abort "{{{
+	let use_global = get(a:000, 0, !has('vim_starting'))
+	let abspath = resolve(expand('~/.vim/rc/' . a:path))
+	if !use_global
 		if filereadable(abspath)
-			execute 'source' fnameescape(abspath) 
+			execute 'source' fnameescape(abspath)
 		endif
-	 	return 
-	endif 
-	" substitute all 'set' to 'setglobal' 
-	let content = map(readfile(abspath), 
-		\ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")') 
-	" create tempfile and source the tempfile 
-	let tempfile = tempname() 
+	 	return
+	endif
+	" substitute all 'set' to 'setglobal'
+	let content = map(readfile(abspath),
+		\ 'substitute(v:val, "^\\W*\\zsset\\ze\\W", "setglobal", "")')
+	" create tempfile and source the tempfile
+	let tempfile = tempname()
 
-	try 
-		call writefile(content, tempfile) 
-		execute 'source' fnameescape(tempfile) 
-	finally 
-		if filereadable(tempfile) 
-			call delete(tempfile) 
-		endif 
-	endtry 
+	try
+		call writefile(content, tempfile)
+		execute 'source' fnameescape(tempfile)
+	finally
+		if filereadable(tempfile)
+			call delete(tempfile)
+		endif
+	endtry
 
-endfunction "}}} 
+endfunction "}}}
 
-if has('vim_starting') 
-	call s:source_rc('func.rc.vim') 
-	call s:source_rc('init.rc.vim') 
-endif 
+if has('vim_starting')
+	call s:source_rc('func.rc.vim')
+	call s:source_rc('init.rc.vim')
+endif
 ""--" B Plugin Manager: vim-plug{{{1
 ""------------------------------------------------------------------------
 " -- Prepare from shell
@@ -59,6 +69,9 @@ endfunction
 "-------------------------------------------------------------------------
 "source ~/.vim/rc/taglist.rc.vim
 
+let mapleader = "\<Space>"
+noremap! <C-?> <C-h>
+
 if s:is_plugged('tagbar')
 	call s:source_rc('tagbar.rc.vim')
 else
@@ -74,10 +87,14 @@ if s:is_plugged('lightline.vim')
 else
 endif
 
-if s:is_plugged('vimfiler.vim')
-	call s:source_rc('vimfiler.vim') 
-else
-	let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"if s:is_plugged('vimfiler.vim')
+"	call s:source_rc('vimfiler.vim') 
+"else
+"	let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"endif
+
+if s:is_plugged('defx.nvim')
+	call s:source_rc('defx.vim') 
 endif
 
 "}}}1 " Taglist:

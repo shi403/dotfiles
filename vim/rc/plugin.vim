@@ -46,7 +46,10 @@ call plug#begin('$CACHE/vim-plug')
 	"Plug 'nixprime/cpsm'
 
 	Plug 'Shougo/unite.vim'
-	Plug 'Shougo/vimfiler.vim'
+	"Plug 'Shougo/vimfiler.vim'
+	Plug 'Shougo/defx.nvim'
+	Plug 'kristijanhusak/defx-icons'
+	Plug 't9md/vim-choosewin'
 
 	"-- filetype
 	Plug 'plasticboy/vim-markdown' , { 'for': 'markdown' }

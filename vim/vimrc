@@ -7,17 +7,12 @@ scriptencoding utf-8
 
 let s:filedir = fnamemodify(expand('<sfile>'), ':h')
 if 1
-	execute 'source' s:filedir . '/rc/vimrc'
-	if has('vim_starting') 
-		execute 'set runtimepath+='. s:filedir
-	endif
+	execute 'source ' . s:filedir . '/rc/vimrc'
+	colorscheme alduin
+	"if has('vim_starting') 
+	"	execute 'set runtimepath+='. s:filedir
+	"endif
 endif
 
-if has('gui_running')
-	echo 'load gvimrc'
-	execute 'source' s:filedir . '/rc/gvimrc'
-else
-	echo 'noload gvimrc'
-endif
 
 " vim:foldmethod=marker:foldlevel=2

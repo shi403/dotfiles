@@ -3,28 +3,28 @@
 "
 
 let g:lightline = { 
-		\ 'colorscheme': 'default',
-    	\ 'mode_map': {'c': 'NORMAL'},
-    	\ 'active': {
-    	\     'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename', 'readonly', 'modified' ] ]
-		\     } ,
-		\ 'component_function': {
-		\     'mode': 'LightlineMode',
-		\     'readonly': 'MyReadonly',
-		\     'gitbranch': 'MyGitbranch'
-		\     } ,
-		\ 'separator': {
-		\     'left' : "\ue0c4",
-		\     'right': "\ue0c5" 
-		\     } ,
-		\ 'subseparator': {
-		\     'left' : "\u2502",
-		\     'right': "\u2502" 
-		\     }  
-		\ }
-
+	\ 'colorscheme': 'default',
+	\ 'mode_map': {'c': 'NORMAL'},
+	\ 'active': {
+	\     'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename', 'readonly', 'modified' ] ]
+	\     } ,
+	\ 'component_function': {
+	\     'mode': 'LightlineMode',
+	\     'readonly': 'MyReadonly',
+	\     'gitbranch': 'MyGitbranch'
+	\     } ,
+	\ 'separator': {
+	\     'left' : "",
+	\     'right': "" 
+	\     } ,
+	\ 'subseparator': {
+	\     'left' : "\u2502",
+	\     'right': "\u2502" 
+	\     }  
+	\ }
+"│
 function! LightlineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
+	return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 "

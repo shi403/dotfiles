@@ -1,4 +1,7 @@
 
+set helplang=ja
+set t_Co=256
+
 "-------------------------------------------------------------------------
 " W Search Options: {{{1
 "-------------------------------------------------------------------------
@@ -64,7 +67,7 @@ nnoremap <silent> ,mn :<C-u>set mouse=<CR>
 "-------------------------------------------------------------------------
 set background=dark
 let g:solarized_termcolors=256
-colorscheme molokai
+colorscheme alduin
 
 " 100 桁以上はハイライトしない
 set synmaxcol=200
