@@ -104,9 +104,6 @@ call plug#end()
 " common plugin settings {{{
 let g:Align_xstrlen = 3
 
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
 " }}}
 "-------------------------------------------------------------------------
 "--" C Foldings: 折り畳み設定 {{{1
@@ -125,10 +122,6 @@ nmap ga <Plug>(EasyAlign)
 "hi FoldColumn gui=bold term=standout ctermbg=LightGrey ctermfg=DarkBlue guibg=Grey   guifg=     DarkBlue
 
 set commentstring=%s
-
-"set foldmethod=marker
-nmap <silent> ,fc :<C-U>foldclose<CR>
-nmap <silent> ,fo :<C-U>foldopen<CR>
 
 set foldmethod=syntax
 set foldlevel=1
