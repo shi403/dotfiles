@@ -59,7 +59,7 @@ set   wildignore+=*.out,*.aux
 set   wildignore+=*.spl
 set   wildignore+=*.luac,*.jar,*.pyc,.class
 set   completeopt=menuone,preview
---set   complete=.,w,b,u,t,i,k
+"set   complete=.,w,b,u,t,i,k
 
 " ポップアップメニューに表示される項目数
 set pumheight=12
