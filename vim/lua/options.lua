@@ -49,6 +49,8 @@ opt.shiftwidth = 4
 --" ポップアップメニューに表示される項目数
 opt.pumheight = 30
 
+--" Path delimiter use '/' for windows
+opt.shellslash = true
 
 -------------------------------------------------------------------------
 --" W Search Options: {{{1
