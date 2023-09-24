@@ -4,7 +4,7 @@ local opt = vim.opt
 opt.helplang = "ja,en"
 opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
-opt.ambiwidth = 'single'
+--opt.ambiwidth = 'double'
 
 --opt.mouse = 'a'
 
@@ -30,11 +30,19 @@ opt.titleold = ''
 
 --" Tab可視化:
 opt.list = true
-opt.listchars = "tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%"
+--opt.listchars = "tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%"
 
-vim.cmd("call setcellwidths([[0x2502, 0x2502, 1], [0x2194, 0x2199, 2]])")
+--vim.cmd("call setcellwidths([[0x2502, 0x2502, 1], [0x2194, 0x2199, 2]])")
+--vim.cmd("call setcellwidths([[0x2500, 0x2500, 1]])")
+--vim.cmd("call setcellwidths([[0x251c, 0x251c, 1]])")
+--vim.cmd("call setcellwidths([[0x2524, 0x2524, 1]])")
+--vim.cmd("call setcellwidths([[0x256d, 0x256d, 1]])")
+--vim.cmd("call setcellwidths([[0x256e, 0x256e, 1]])")
+--vim.cmd("call setcellwidths([[0x256f, 0x256f, 1]])")
+--vim.cmd("call setcellwidths([[0x2570, 0x2570, 1]])")
+
 --opt.fillchars = "stl:^,stlnc:=,diff:-,vert:│"
-opt.fillchars = "stl:^,stlnc:=,vert:│,fold:-,diff:-"
+--opt.fillchars = "stl:^,stlnc:=,vert:│,fold:-,diff:-"
 
 opt.tabstop = 4
 opt.shiftwidth = 4

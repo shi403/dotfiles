@@ -99,7 +99,9 @@ require("lazy").setup({
 	{
 		'nvim-tree/nvim-tree.lua',
 		config = function()
-			require("nvim-tree").setup({ open_on_setup_file = true })
+			--require("nvim-tree").setup({ open_on_setup_file = true })
+			require("nvim-tree").setup()
+			require("nvim-tree.api").tree.open()
 		end
 	},
 

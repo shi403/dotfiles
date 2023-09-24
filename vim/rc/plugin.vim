@@ -47,7 +47,13 @@ call plug#begin('$CACHE/vim-plug')
 
 	Plug 'Shougo/unite.vim'
 	"Plug 'Shougo/vimfiler.vim'
-	Plug 'Shougo/defx.nvim'
+	if has('nvim')
+		Plug 'Shougo/defx.nvim'
+	else
+		Plug 'Shougo/defx.nvim'
+		Plug 'roxma/nvim-yarp'
+		Plug 'roxma/vim-hug-neovim-rpc'
+	endif
 	Plug 'kristijanhusak/defx-icons'
 	Plug 't9md/vim-choosewin'
 
@@ -94,10 +100,6 @@ call plug#begin('$CACHE/vim-plug')
 	"-- .vim_common
 	Plug 'junegunn/vim-easy-align'
 
-"	if !has('nvim')
-"		Plug 'roxma/nvim-yarp'
-"		Plug 'roxma/vim-hug-neovim-rpc'
-"	endif
 
 call plug#end()
 
