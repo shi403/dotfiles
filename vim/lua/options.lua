@@ -23,6 +23,9 @@ opt.wrap   = false
 opt.number = true
 opt.relativenumber = true
 
+opt.scrolloff = 4
+opt.inccommand = 'split'
+
 opt.title = true
 opt.titleold = ''
 --"auto BufEnter * let &titlestring = hostname() . "/" . expand("%:p")
@@ -59,7 +62,7 @@ opt.hlsearch   = true
 opt.incsearch  = false    --" do incremental searching
 opt.ignorecase = true     --" 検索時に大文字小文字を無視
 opt.smartcase  = true     --" 大文字小文字の両方が含まれている場合は大文字小文字を>
-opt.wrapscan   = true  
+opt.wrapscan   = true 
 
 --" 100 桁以上はハイライトしない
 opt.synmaxcol = 200

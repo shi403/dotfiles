@@ -26,7 +26,12 @@ require("lazy").setup({
         },
         event = "VeryLazy",
         config = function()
-            require "mason".setup {}
+            require "mason".setup {
+                ui = {
+                  check_outdated_packages_on_open = false,
+                  border = 'single',
+                },
+            }
             local mason_lspconfig = require("mason-lspconfig")
             local on_attach = function(_, bufnr)
                 vim.api.nvim_buf_set_option(bufnr, "formatexpr",
