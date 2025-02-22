@@ -242,3 +242,4 @@ hardstatus alwayslastline "$a"
 unsetenv a
 hardstatus off
 
+# vim: ft=screen 

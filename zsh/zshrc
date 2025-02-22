@@ -9,7 +9,6 @@ if [ "${OSTYPE}" = "msys" ] && [ -f /etc/zsh/zprofile ] && ! [ -v MSYSTEM ]; the
 
 ########################################
 # キーバインド {{{
-# emacs:-e vi:-v 風キーバインドにする
 bindkey -v
 
 #}}}
@@ -33,10 +32,11 @@ setopt inc_append_history;     # 履歴をインクリメンタルに追加
 function history-all { history -E 1 }
 
 # ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
-bindkey '^R' history-incremental-pattern-search-backward
+#bindkey '^R' history-incremental-pattern-search-backward
 # history search
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
+
 ########################################
 #-- 色を使用
 autoload -Uz colors
@@ -46,11 +46,6 @@ colors
 export LANG=ja_JP.UTF-8
 export LC_CTYPE=ja_JP.UTF-8
 
-path=( 
-	/usr/local/opt/go/libexec/bin
-	/usr/local/opt 
-	$path 
-)
 ########################################
 # プロンプト {{{
 # 1行表示
@@ -100,8 +95,8 @@ zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
 zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
 
 function _update_vcs_info_msg() {
-    LANG=en_US.UTF-8 vcs_info
-    RPROMPT="${vcs_info_msg_0_}"
+  LANG=en_US.UTF-8 vcs_info
+  RPROMPT="${vcs_info_msg_0_}"
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
@@ -142,10 +137,23 @@ alias sudo='sudo '
 alias -g L='| less'
 alias -g G='| grep'
 
-alias ctags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+#alias ctags='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
 alias history='history -iD'
 alias hi=history
+
+fzf-bookmark() {
+  local selected
+  selected=`(cat ~/bookmarks 2>/dev/null) | fzf`
+  if [ -n "$selected" ]; then
+    LBUFFER=${LBUFFER}"`awk 'BEGIN{FS=","}{print $2}' <<<"$selected"` "
+  fi
+  zle reset-prompt
+}
+
+zle -N fzf-bookmark
+bindkey '^Xb' fzf-bookmark
+
 ########################################
 # OS 別の設定
 case ${OSTYPE} in
@@ -159,5 +167,14 @@ case ${OSTYPE} in
         alias ls='ls -F --color=auto'
         ;;
 esac
+
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # vim:set ft=zsh:

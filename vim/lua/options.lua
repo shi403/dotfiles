@@ -19,6 +19,7 @@ opt.showtabline = 2
 opt.foldcolumn = 'auto'
 opt.showmode = false
 
+opt.listchars = "tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%"
 opt.wrap   = false
 opt.number = true
 opt.relativenumber = true

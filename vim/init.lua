@@ -11,4 +11,3 @@ local function set_colorscheme(nm)
 end
 set_colorscheme(DEFAULT_COLORSCHEME)
 
-

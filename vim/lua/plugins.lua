@@ -33,7 +33,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 -- Example using a list of specs with the default options
 vim.g.mapleader = " " 
 
@@ -96,10 +95,10 @@ require("lazy").setup({
 	"4513ECHO/vim-colors-hatsunemiku",
 	"morhetz/gruvbox",
 
+	'Shougo/defx.nvim',
 	{
 		'nvim-tree/nvim-tree.lua',
 		config = function()
-			--require("nvim-tree").setup({ open_on_setup_file = true })
 			require("nvim-tree").setup()
 			require("nvim-tree.api").tree.open()
 		end
@@ -110,6 +109,14 @@ require("lazy").setup({
 		dependencies = { 'nvim-tree/nvim-web-devicons' },
 	},
 })
+
+
+if vim.fn.has("gui_vimr") == 0 then
+	require("nvim-tree").setup {
+		-- Here goes some VimR specific settings like
+		open_on_setup_file = true
+	}
+end
 
 require('lualine').setup {
 	options = {
