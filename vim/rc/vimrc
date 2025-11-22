@@ -1,4 +1,5 @@
 
+
 if !1 | finish | endif
 
 " == Encoding settings. == {{{1
@@ -78,9 +79,9 @@ else
 endif
 
 if s:is_plugged('lightline.vim')
-	call s:source_rc('lightline.rc.vim') 
+	call s:source_rc('lightline.rc.vim')
 	"-- g:lightline 変更後にテスト確認用
-	command! -bar LightlineUpdate 
+	command! -bar LightlineUpdate
 		\ call lightline#init()|
 		\ call lightline#colorscheme()|
 		\ call lightline#update()
@@ -88,13 +89,13 @@ else
 endif
 
 "if s:is_plugged('vimfiler.vim')
-"	call s:source_rc('vimfiler.vim') 
+"	call s:source_rc('vimfiler.vim')
 "else
 "	let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 "endif
 
 if s:is_plugged('defx.nvim')
-	call s:source_rc('defx.vim') 
+	call s:source_rc('defx.vim')
 endif
 
 "}}}1 " Taglist:
@@ -106,5 +107,25 @@ call s:source_rc('option.vim')
 call s:source_rc('keymap.vim')
 
 "}}}1
+
+"------------------------------------------------------------------------
+"let g:loaded_2html_plugin      = 1
+"let g:loaded_logiPat           = 1
+"let g:loaded_getscriptPlugin   = 1
+"let g:loaded_gzip              = 1
+"let g:loaded_man               = 1
+"let g:loaded_matchit           = 1
+"let g:loaded_matchparen        = 1
+"let g:loaded_netrwFileHandlers = 1
+"let g:loaded_netrwPlugin       = 1
+"let g:loaded_netrwSettings     = 1
+"let g:loaded_rrhelper          = 1
+"let g:loaded_shada_plugin      = 1
+"let g:loaded_spellfile_plugin  = 1
+"let g:loaded_tarPlugin         = 1
+"let g:loaded_tutor_mode_plugin = 1
+"let g:loaded_vimballPlugin     = 1
+"let g:loaded_zipPlugin         = 1
+" }}} Disable Default Plugins:
 
 " vim:foldmethod=marker:foldlevel=10
